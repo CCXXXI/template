@@ -25,22 +25,14 @@
 ### cpp
 
 * 代码风格大部分按照[ReSharper](https://www.jetbrains.com/dotnet/)默认配置，以下例外：
-
   * 缩进设定为4个空格
-
     * 为了在各个平台上阅读时，至少缩进宽度保持不变
-
   * 括号设定为[K&R style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style)
-
     * 因为习惯于通过缩进而不是大括号来识别逻辑层次
     * [Lisp style](https://en.wikipedia.org/wiki/Indentation_style#Lisp_style)（或者叫Python style）更符合要求，但主流IDE一般不支持这个，只好退而求其次
-
   * Cleanup Code启用所有选项
-
     * 理由同yapf
-
   * 完全禁用Clang-Tidy检查
-
     * Clang-Tidy很强大，很严格
     * 但它给出的warning有太多是想修复也无从下手的，只好直接disable
     * disable的多了，就觉得不如直接全都禁用了
@@ -58,15 +50,20 @@
 
 ## 参考资料
 
-部分资料有多种语言版本，中文版更新常常滞后于英文版
+部分资料有多种语言版本，中文版更新常常滞后于英文版（悲）
 
-* [F0RE1GNERS](https://github.com/F0RE1GNERS)/[template](https://github.com/F0RE1GNERS/template)
-* [LzyRapx](https://github.com/LzyRapx)/[Algorithmic_Template](https://github.com/LzyRapx/Algorithmic_Template)
-* [Python中文文档](https://docs.python.org/zh-cn/3/index.html)
-* [cppreference](https://zh.cppreference.com/)
-* [OI Wiki](https://oi-wiki.org/)
-* [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
-* [good hash table primes](https://planetmath.org/goodhashtableprimes)
-* [OEIS](https://oeis.org/)
-* [GitHub](https://github.com/)
-* [Google](https://www.google.com/)
+* 模板
+  * [F0RE1GNERS](https://github.com/F0RE1GNERS)/[template](https://github.com/F0RE1GNERS/template)
+  * [LzyRapx](https://github.com/LzyRapx)/[Algorithmic_Template](https://github.com/LzyRapx/Algorithmic_Template)
+* 文档
+  * [Python中文文档](https://docs.python.org/zh-cn/3/index.html)
+  * [cppreference](https://zh.cppreference.com/)
+* 工具
+  * [Compiler Explorer](https://godbolt.org/)
+  * [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+* 检索
+  * [stackoverflow](https://stackoverflow.com/)
+  * [OI Wiki](https://oi-wiki.org/)
+  * [OEIS](https://oeis.org/)
+  * [GitHub](https://github.com/)
+  * [Google](https://www.google.com/)
