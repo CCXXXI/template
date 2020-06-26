@@ -24,14 +24,14 @@ using u32 = uint32_t;
 
 $C inf = 0x3f3f3f3f;
 
-auto ccxxxi() {
+$ ccxxxi() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 }
 
 #pragma endregion
 
-auto main() -> int {
+$ main() -> int {
     ccxxxi();
     cout << "Hello world!\n";
 }
