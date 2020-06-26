@@ -17,10 +17,7 @@
 * 代码风格完全按照[yapf](https://github.com/google/yapf)默认配置
   * yapf非常严格以至于写代码时几乎不需要考虑格式，perfect
 * IDE偏好[PyCharm](https://www.jetbrains.com/pycharm/)，代码风格整理稍微弱了点，用yapf补足之后基本完美
-  * 备选[vscode](https://code.visualstudio.com/)，插件超多但也因此配置比较麻烦
-* 为了方便直接在OJ上用，大概没有用到3.7及以后的特性
-  * 如果有，应该没超过[Anaconda](https://www.anaconda.com/)最新版的范围
-  * 如果仍然有缺失的库，应该可以通过conda或者pip安装
+* python + numpy已经足够强大，所以没有模板
 
 ### cpp
 
