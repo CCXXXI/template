@@ -59,6 +59,7 @@
 * 文档
   * [Python中文文档](https://docs.python.org/zh-cn/3/index.html)
   * [cppreference](https://zh.cppreference.com/)
+  * [NumPy 中文](https://www.numpy.org.cn/)
 * 工具
   * [Compiler Explorer](https://godbolt.org/)
   * [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
