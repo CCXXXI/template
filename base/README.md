@@ -19,4 +19,9 @@ using u32 = uint32_t;
 #define $C auto const&
 $C inf = 0x3f3f3f3f;
 #pragma endregion
+
+auto main() -> int {
+    cout << "Hello world!\n";
+}
+
 ```
