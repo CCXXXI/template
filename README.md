@@ -55,3 +55,18 @@
     * 比如把`$`用于标识符
   * 两者至少之一不支持的特性不会使用
     * 例外：`#include<bits/stdc++.h>`，这个文件会从gcc复制一份到代码目录
+
+## 参考资料
+
+部分资料有多种语言版本，中文版更新常常滞后于英文版
+
+* [F0RE1GNERS](https://github.com/F0RE1GNERS)/[template](https://github.com/F0RE1GNERS/template)
+* [LzyRapx](https://github.com/LzyRapx)/[Algorithmic_Template](https://github.com/LzyRapx/Algorithmic_Template)
+* [Python中文文档](https://docs.python.org/zh-cn/3/index.html)
+* [cppreference](https://zh.cppreference.com/)
+* [OI Wiki](https://oi-wiki.org/)
+* [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+* [good hash table primes](https://planetmath.org/goodhashtableprimes)
+* [OEIS](https://oeis.org/)
+* [GitHub](https://github.com/)
+* [Google](https://www.google.com/)
