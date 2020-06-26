@@ -39,8 +39,9 @@
     * 仔细区分出哪些检查是需要的哪些是要disable的，是个更好的解决方案
     * 但我懒
 * IDE偏好[Visual Studio](https://visualstudio.microsoft.com/)
-  * ReSharper是vs的插件，所以没有备选IDE，至少在Windows平台下
-  * 如果需要备选的话，可能是[CLion](https://www.jetbrains.com/clion/)或者vscode
+  * ReSharper是vs的插件，所以这个选择是理所当然的
+  * 但是写一些简单代码的时候，会用[CLion](https://www.jetbrains.com/clion/)
+  * 虽然CLion性能要求也很高，但与启用了ReSharper的vs相比，速度还是快很多的
 * 本地环境偏好开到c++latest，但是为了方便在OJ上用，尽量兼容c++17
   * 代码会在msvc和gcc下分别测试
   * 两者都支持的特性，即使未被标准规定，也可能会使用
