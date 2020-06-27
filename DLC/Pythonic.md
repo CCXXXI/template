@@ -4,9 +4,30 @@
 
 若使用此模板，应删去（或注释掉）[基础模板](../base/README.md)中的`ccxxxi`函数
 
+所以为了方便直接复制，这里追加了修改后的基础模板
+
 ------
 
 ```cpp
+#pragma region base
+
+#include "bits/stdc++.h"
+
+using namespace std;
+
+using i64 = int64_t;
+using u64 = uint64_t;
+using i32 = int32_t;
+using u32 = uint32_t;
+
+#define $ auto
+#define $$ auto&&
+#define $C auto const&
+
+$C inf = 0x3f3f3f3f;
+
+#pragma endregion
+
 #pragma region Pythonic
 
 #ifndef ONLINE_JUDGE
@@ -80,5 +101,4 @@ $ main() -> int {
     print(p, v);
     print(hello, world);
 }
-
 ```
