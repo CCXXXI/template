@@ -65,7 +65,7 @@ public:
             t >>= 1;
             ++s;
         }
-        for ($ i : checker) {
+        for ($$ i : checker) {
 
             // qpow
             i64 ret = 1;
