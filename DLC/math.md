@@ -23,14 +23,23 @@ $ constexpr qpow(Int1 base, Int2 e) {
     return ret;
 }
 
+// 快速乘，避免64位整数溢出
+template <$ Mod, typename Int1, typename Int2>
+$ constexpr mul(Int1 a, Int2 b) {
+    $ t = static_cast<i64>(
+        static_cast<u64>(a) * b
+        - static_cast<u64>(static_cast<long double>(a) * b / Mod) * Mod);
+    return Int1(t < 0 ? t + Mod : t);
+}
+
 // 快速幂，不依赖Mod素性
 template <$ Mod, typename Int1, typename Int2>
 $ constexpr qpow_not_prime(Int1 base, Int2 e) {
     static_assert(Mod > 1);
     Int1 ret = 1;
-    for (base %= Mod; e; e >>= 1, base = base * base % Mod) {
+    for (base %= Mod; e; e >>= 1, base = mul<Mod>(base, base)) {
         if (e & 1) {
-            ret = ret * base % Mod;
+            ret = mul<Mod>(ret, base);
         }
     }
     return ret;
@@ -51,41 +60,60 @@ public:
     // 基于费马小定理，进行Miller–Rabin素性测试
     $ static constexpr check(i64 const& n) {
         $ checker = array{2, 3, 5, 7, 11, 13, 17, 19, 23};
-        for ($$ i : checker) {
-            if (n % i == 0) {
-                return n == i;
+
+        for ($$ a : checker) {
+            if (n % a == 0) {
+                return n == a;
             }
         }
         if (n < checker.back()) {
             return false;
         }
-        i64 s = 0;
-        $ t = n - 1;
-        while ((t & 1) != 0) {
-            t >>= 1;
-            ++s;
-        }
-        for ($$ i : checker) {
 
-            // qpow
-            i64 ret = 1;
-            $ base = i % n, e = t;
-            for (; e != 0; e >>= 1, base = base * base % n) {
+        // n == 2^r * d + 1
+        i64 r = 0;
+        $ d = n - 1;
+        while ((d & 1) == 0) {
+            d >>= 1;
+            ++r;
+        }
+
+        // 为了constexpr，mul不能直接调用，让我再次感受到了static_cast的语法设计有多糟糕
+        for ($$ a : checker) {
+            // x = a^d % n
+            i64 x = 1;
+            $ base = a % n, e = d;
+            for (; e != 0; e >>= 1) {
                 if ((e & 1) != 0) {
-                    ret = ret * base % n;
+                    x = static_cast<i64>(
+                        static_cast<u64>(x) * base
+                        - static_cast<u64>(static_cast<long double>(x) * base / n) * n);
+                    if (x < 0) {
+                        x += n;
+                    }
+                }
+                base = static_cast<i64>(
+                    static_cast<u64>(base) * base
+                    - static_cast<u64>(static_cast<long double>(base) * base / n) * n);
+                if (base < 0) {
+                    base += n;
                 }
             }
-            // qpow over
 
-            if (ret == 1) {
+            if (x == 1) {
                 continue;
             }
-            auto ok = false;
-            for ($ j = 0; j < s && !ok; ++j) {
-                if (ret == n - 1) {
+            $ ok = false;
+            for ($ i = 0; i < r && !ok; ++i) {
+                if (x == n - 1) {
                     ok = true;
                 }
-                ret = ret * ret % n;
+                x = static_cast<i64>(
+                    static_cast<u64>(x) * x
+                    - static_cast<u64>(static_cast<long double>(x) * x / n) * n);
+                if (x < 0) {
+                    x += n;
+                }
             }
             if (!ok) {
                 return false;
