@@ -49,6 +49,9 @@ class prime {
 
     // check辅助函数
     $ static constexpr check_helper(i64 const& checker, i64 const& a) {
+        if (checker >= a) {
+            return true;
+        }
         if ((a & 1) == 0) {
             return false;
         }
