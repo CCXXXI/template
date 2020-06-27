@@ -241,19 +241,41 @@ public:
 template <$ Mod, size_t N, i64 Start = 0>
 class fac_arr {
     // 否则fac为0逆元无意义
-    static_assert(Start + N <= Mod);
+    static_assert(Start + N <= Mod or Start > Mod);
 public:
     array<i64, N> fac{};
     array<i64, N> fac_inv{};
 
     constexpr fac_arr() {
-        fac[0] = Start != 0 ? Start : 1;
+        $C start = Start % Mod;
+        fac[0] = start != 0 ? start : 1;
         for (u32 i = 1; i < N; ++i) {
-            fac[i] = fac[i - 1] * (Start + i) % Mod;
+            fac[i] = fac[i - 1] * ((start + i) % Mod) % Mod;
         }
         fac_inv[N - 1] = inv<Mod>::inv_prime(fac[N - 1]);
         for ($ i = N - 1; i > 0; --i) {
-            fac_inv[i - 1] = fac_inv[i] * (Start + i) % Mod;
+            fac_inv[i - 1] = fac_inv[i] * ((start + i) % Mod) % Mod;
+        }
+    }
+};
+
+// 阶乘及其逆元，Start不为0时推广为前缀积，非constexpr版本
+template <$ Mod>
+class fac_arr_not_constexpr {
+public:
+    vector<i64> fac, fac_inv;
+
+    explicit fac_arr_not_constexpr(size_t const& n, i64 start) {
+        assert(start + n <= Mod or start>Mod);
+        fac.resize(n);
+        fac_inv.resize(n);
+        fac[0] = start != 0 ? (start %= Mod) : 1;
+        for (u32 i = 1; i < n; ++i) {
+            fac[i] = fac[i - 1] * ((start + i) % Mod) % Mod;
+        }
+        fac_inv[n - 1] = inv<Mod>::inv_prime(fac[n - 1]);
+        for ($ i = n - 1; i > 0; --i) {
+            fac_inv[i - 1] = fac_inv[i] * ((start + i) % Mod) % Mod;
         }
     }
 };
@@ -269,6 +291,28 @@ public:
         constexpr fac_arr<Mod, N, Start> tmp;
         for (u32 i = 1; i < N; ++i) {
             arr[i] = tmp.fac[i - 1] * tmp.fac_inv[i] % Mod;
+        }
+        if constexpr (Start != 0) {
+            arr[0] = inv<Mod>::inv_prime(Start);
+        }
+    }
+};
+
+// 逆元表，[Start, Start + N)，非constexpr版本
+template <$ Mod>
+class inv_arr_not_constexpr {
+public:
+    vector<i64> arr;
+
+    // 懒癌写法，能用就行
+    explicit inv_arr_not_constexpr(size_t n, i64 start) {
+        arr.resize(n);
+        fac_arr_not_constexpr<Mod> tmp(n, start);
+        for (u32 i = 1; i < n; ++i) {
+            arr[i] = tmp.fac[i - 1] * tmp.fac_inv[i] % Mod;
+        }
+        if (start != 0) {
+            arr[0] = inv<Mod>::inv_prime(start);
         }
     }
 };
