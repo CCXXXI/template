@@ -47,60 +47,50 @@ class prime {
     // 此class仅用作封装，不应实例化
     prime() = delete;
 
-    // check辅助函数
-    $ static constexpr check_helper(i64 const& checker, i64 const& a) {
-        if (checker >= a) {
-            return true;
-        }
-        if ((a & 1) == 0) {
-            return false;
-        }
-        $ d = a - 1;
-        while ((d & 1) == 0) {
-            d >>= 1;
-        }
-
-        // $ t = qpow_not_prime<a>(checker, d);
-        // 因为n不是编译期常量，所以无法直接调用qpow_not_prime
-        $ t = 1ll;
-        for ($ base = checker % a, e = d; e != 0; e >>= 1, base = base * base % a) {
-            if ((e & 1) != 0) {
-                t = t * base % a;
-            }
-        }
-        // qpow over
-
-        while (d != a - 1 and t != 1 and t != a - 1) {
-            t = t * t % a;
-            d <<= 1;
-        }
-        return t == a - 1 or (d & 1) != 0;
-    }
-
 public:
     // 基于费马小定理，进行Miller–Rabin素性测试
-    $ static constexpr check(i64 const& a) {
-        if (a <= 1) {
+    $ static constexpr check(i64 const& n) {
+        $ checker = array{2, 3, 5, 7, 11, 13, 17, 19, 23};
+        for ($$ i : checker) {
+            if (n % i == 0) {
+                return n == i;
+            }
+        }
+        if (n < checker.back()) {
             return false;
         }
-
-        // for ($ checker : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
-        //     if (!check_helper(checker, a)) {
-        //         return false;
-        //     }
-        // }
-        // 为了执行编译时计算，手动展开
-        if (!check_helper(2, a)
-            or !check_helper(325, a)
-            or !check_helper(9375, a)
-            or !check_helper(28178, a)
-            or !check_helper(450775, a)
-            or !check_helper(9780504, a)
-            or !check_helper(1795265022, a)
-        ) {
-            return false;
+        i64 s = 0;
+        $ t = n - 1;
+        while ((t & 1) != 0) {
+            t >>= 1;
+            ++s;
         }
+        for ($ i : checker) {
 
+            // qpow
+            i64 ret = 1;
+            $ base = i % n, e = t;
+            for (; e != 0; e >>= 1, base = base * base % n) {
+                if ((e & 1) != 0) {
+                    ret = ret * base % n;
+                }
+            }
+            // qpow over
+
+            if (ret == 1) {
+                continue;
+            }
+            auto ok = false;
+            for ($ j = 0; j < s && !ok; ++j) {
+                if (ret == n - 1) {
+                    ok = true;
+                }
+                ret = ret * ret % n;
+            }
+            if (!ok) {
+                return false;
+            }
+        }
         return true;
     }
 };
