@@ -69,11 +69,14 @@ $ print(T const& a, Ts const&... args) {
 
 $ main() -> int {
     ccxxxi();
+
     DBG(1 + 1);
+
     $C p = pair{"ans", 42};
     $C v = vector{2, 3, 1};
     $C hello = "Hello";
     $C world = "world!";
+    
     print(p, v);
     print(hello, world);
 }
