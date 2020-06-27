@@ -20,9 +20,10 @@ $C debug_style = "\033[32;1m"; // 绿色加亮
 #endif
 
 $ ccxxxi() {
+#ifdef ONLINE_JUDGE
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-#ifndef ONLINE_JUDGE
+#else
     cout << input_style;
 #endif
 }

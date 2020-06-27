@@ -25,8 +25,10 @@ using u32 = uint32_t;
 $C inf = 0x3f3f3f3f;
 
 $ ccxxxi() {
+#ifdef ONLINE_JUDGE
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+#endif
 }
 
 #pragma endregion
