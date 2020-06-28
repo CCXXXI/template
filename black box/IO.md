@@ -2,6 +2,8 @@
 
 copy自https://oi-wiki.org/misc/io/
 
+注意register在c++17已被弃用（但仍作为保留关键字）
+
 ------
 
 ```cpp
