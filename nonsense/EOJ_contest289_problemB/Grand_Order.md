@@ -4,6 +4,8 @@
 
 以【特化：】开头的注释表示面向测试数据的优化
 
+------
+
 ```cpp
 #pragma region 2-dimensional tree
 
@@ -141,3 +143,19 @@ public:
 #pragma endregion
 
 ```
+
+------
+
+其实还剩一些优化方向没有尝试，如果以上没能把时间压缩到1s以内，以下是可选内容：
+
+* 将所有浮点数换成定点数，节约算力
+  * 若此，`sqrt`应替换为牛顿法求平方根
+  * 定点数优化：性能成倍提升 - 韦易笑的文章 - 知乎 https://zhuanlan.zhihu.com/p/149517485
+* 寻找完美哈希函数
+  * 我进行了一些搜索但没能找到简单的解决方案
+  * GNU的完美哈希函数生成工具：https://www.gnu.org/software/gperf/manual/gperf.html
+  * 文档过于反人类，至今未能学会使用
+* 这份资料提到了一些其它算法：https://people.csail.mit.edu/indyk/helsinki-1.pdf
+  * 权威性未知
+* 这里显示了更多相关的数据结构与算法：https://en.wikipedia.org/wiki/Nearest_neighbor_search
+  * 太多了以至于丝毫没有意愿去逐个研究
