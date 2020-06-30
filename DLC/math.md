@@ -124,7 +124,7 @@ public:
 };
 
 // 素数表
-template <size_t N>
+template <u32 N>
 class prime_arr {
 public:
     array<u32, N> pri{};
@@ -151,7 +151,7 @@ public:
 };
 
 // 欧拉函数表
-template <size_t N>
+template <u32 N>
 class phi_arr {
 public:
     array<u32, N> phi{};
@@ -172,7 +172,7 @@ public:
 };
 
 // 素数表 + 欧拉函数表
-template <size_t N>
+template <u32 N>
 class prime_phi_arr {
 public:
     array<u32, N> pri{};
@@ -238,7 +238,7 @@ public:
 };
 
 // 阶乘及其逆元，Start不为0时推广为前缀积
-template <$ Mod, size_t N, i64 Start = 0>
+template <$ Mod, u32 N, i64 Start = 0>
 class fac_arr {
     // 否则fac为0逆元无意义
     static_assert(Start + N <= Mod or Start > Mod);
@@ -265,7 +265,7 @@ class fac_arr_not_constexpr {
 public:
     vector<i64> fac, fac_inv;
 
-    explicit fac_arr_not_constexpr(size_t const& n, i64 start) {
+    explicit fac_arr_not_constexpr(u32 const& n, i64 start) {
         assert(start + n <= Mod or start>Mod);
         fac.resize(n);
         fac_inv.resize(n);
@@ -281,7 +281,7 @@ public:
 };
 
 // 逆元表，[Start, Start + N)
-template <$ Mod, size_t N, i64 Start = 0>
+template <$ Mod, u32 N, i64 Start = 0>
 class inv_arr {
 public:
     array<i64, N> arr{};
@@ -305,7 +305,7 @@ public:
     vector<i64> arr;
 
     // 懒癌写法，能用就行
-    explicit inv_arr_not_constexpr(size_t n, i64 start) {
+    explicit inv_arr_not_constexpr(u32 n, i64 start) {
         arr.resize(n);
         fac_arr_not_constexpr<Mod> tmp(n, start);
         for (u32 i = 1; i < n; ++i) {
@@ -318,7 +318,7 @@ public:
 };
 
 // 组合数，需要用fac_arr来初始化
-template <$ Mod, size_t N>
+template <$ Mod, u32 N>
 class comb {
     const fac_arr<Mod, N>& fac_;
 
