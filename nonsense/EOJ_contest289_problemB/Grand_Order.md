@@ -110,6 +110,7 @@ private:
     $ dis2(crd_arr_t const& p, u32 const& x) {
         $C dis_x = static_cast<double>(p[0]) - static_cast<double>(points_[x].crd[0]);
         $C dis_y = static_cast<double>(p[1]) - static_cast<double>(points_[x].crd[1]);
+        // 特化：经过反复测试，这种看上去很不正常的四舍五入方式是最快的
         return static_cast<double>(static_cast<i32>(sqrt(dis_x * dis_x + dis_y * dis_y) * 1000 + 0.5)) / 1000;
     }
 
