@@ -22,7 +22,7 @@ using u32 = uint32_t;
 #define $$ auto&&
 #define $C auto const&
 
-$C inf = 0x3f3f3f3f;
+$ constexpr inf = 0x3f3f3f3f;
 
 $ ccxxxi() {
 #ifdef ONLINE_JUDGE

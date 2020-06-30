@@ -24,7 +24,7 @@ using u32 = uint32_t;
 #define $$ auto&&
 #define $C auto const&
 
-$C inf = 0x3f3f3f3f;
+$ constexpr inf = 0x3f3f3f3f;
 
 #pragma endregion
 
@@ -32,9 +32,9 @@ $C inf = 0x3f3f3f3f;
 
 #ifndef ONLINE_JUDGE
 // 给单调的黑框框加点色彩
-$C input_style = "\033[34;1m"; // 蓝色加亮
-$C print_style = "\033[m"; // 默认白色字
-$C debug_style = "\033[32;1m"; // 绿色加亮
+$ constexpr input_style = "\033[34;1m"; // 蓝色加亮
+$ constexpr print_style = "\033[m"; // 默认白色字
+$ constexpr debug_style = "\033[32;1m"; // 绿色加亮
 #define DBG(x) cout << debug_style << #x << ": " << (x) << "\n" << input_style
 #else
 #define DBG(x)
