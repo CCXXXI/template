@@ -1,8 +1,4 @@
-# 未分类
-
-因为各种原因还没归类的内容
-
-## 并查集
+# 并查集
 
 ```cpp
 #pragma region Disjoint Set Union
