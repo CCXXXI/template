@@ -39,12 +39,12 @@ private:
     vector<u32> lc_, rc_;
     // 特化：不再为每个点存储单独的划分维度，节省了一点点空间
     // vector<bool> axis_;
-    bool beg_=false;
+    bool beg_ = false;
     vector<point>& points_;
 
     // 以 [first, last) 中的点建树，返回此树的root
     // 特化：维度交替选择xy，节省计算方差的时间
-    $ build(u32 const& first, u32 const& last,bool const& r) -> u32 {
+    $ build(u32 const& first, u32 const& last, bool const& r) -> u32 {
         // $C r = choose_axis(first, last);
         $C num = last - first;
         $C mid = first + num / 2;
@@ -62,8 +62,8 @@ private:
                         }
             );
             // axis_[mid] = r;
-            lc_[mid] = build(first, mid,r^1);
-            rc_[mid] = build(mid + 1, last,r^1);
+            lc_[mid] = build(first, mid, !r);
+            rc_[mid] = build(mid + 1, last, !r);
         }
         return mid;
     }
@@ -72,7 +72,7 @@ private:
     $ choose_axis(u32 const& first, u32 const& last) const {
         return variance(first, last, false) < variance(first, last, true);
     }
-    
+
     // 计算 [first, last) 中，维度r的方差
     $ variance(u32 const& first, u32 const& last, bool const& r) const {
         $ sum_x = 0.0f, sum_x2 = 0.0f;
@@ -89,11 +89,11 @@ public:
     explicit _2dt(vector<point>& points_in) : points_(points_in) {
         $C sz = points_.size();
         // 特化：首次分割时，仍然计算方差并选择较优的维度
-        beg_=choose_axis(0,sz);
+        beg_ = choose_axis(0, sz);
         // axis_.resize(sz);
         lc_.resize(sz, inf);
         rc_.resize(sz, inf);
-        root_ = build(0, sz,beg_);
+        root_ = build(0, sz, beg_);
     }
 
 private:
@@ -120,20 +120,20 @@ public:
     // 返回距离点p最近的k个点，欧氏距离
     $ knn(crd_arr_t const& p, u32 const& k) {
         vector<ret_t> ret(k, none_);
-        function<void(u32,bool)> dfs = [&](u32 const& x,bool const& r) {
+        function<void(u32, bool)> dfs = [&](u32 const& x, bool const& r) {
             if (x != inf) {
                 // $C r = axis_[x];
                 $C dis_sp = p[r] - points_[x].crd[r];
                 $C left = dis_sp <= 0;
-                dfs(left ? lc_[x] : rc_[x],r^1);
+                dfs(left ? lc_[x] : rc_[x], !r);
                 $C tmp = ret_t{dis2(p, x), points_[x].other};
                 push_pop(ret, tmp);
                 if (abs(dis_sp) <= ret.front().dis) {
-                    dfs(left ? rc_[x] : lc_[x],r^1);
+                    dfs(left ? rc_[x] : lc_[x], !r);
                 }
             }
         };
-        dfs(root_,beg_);
+        dfs(root_, beg_);
         sort_heap(ret.begin(), ret.end());
         ret.erase(lower_bound(ret.begin(), ret.end(), none_), ret.end());
         return ret;
