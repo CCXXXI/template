@@ -24,7 +24,7 @@ public:
         crd_arr_t crd;
         Other other;
 
-        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(other_in) {
+        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(move(other_in)) {
         }
     };
 
@@ -150,7 +150,7 @@ public:
         crd_arr_t crd;
         Other other;
 
-        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(std::move(other_in)) {
+        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(move(other_in)) {
         }
     };
 
