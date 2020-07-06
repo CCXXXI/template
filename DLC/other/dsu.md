@@ -6,11 +6,11 @@
 // 朴素的并查集
 class dsu {
 protected:
-    vector<u32> fa_, size_;
+    vector<u32> pa_, size_;
 
     // 路径压缩
     $ find(u32 const& x) -> u32 {
-        return fa_[x] == x ? x : fa_[x] = find(fa_[x]);
+        return pa_[x] == x ? x : pa_[x] = find(pa_[x]);
     }
 
     // 仅供继承用
@@ -18,8 +18,8 @@ protected:
 
 public:
     explicit dsu(u32 const& sz) {
-        fa_.resize(sz);
-        iota(fa_.begin(), fa_.end(), 0);
+        pa_.resize(sz);
+        iota(pa_.begin(), pa_.end(), 0);
         size_.resize(sz, 1);
     }
 
@@ -31,7 +31,7 @@ public:
             if (size_[x] > size_[y]) {
                 swap(x, y);
             }
-            fa_[x] = y;
+            pa_[x] = y;
             size_[y] += size_[x];
         }
     }
@@ -49,15 +49,15 @@ public:
 class dsu_with_erase : public dsu {
 public:
     explicit dsu_with_erase(u32 const& sz) {
-        fa_.resize(sz + sz);
+        pa_.resize(sz + sz);
         for (u32 i = 0; i < sz; ++i) {
-            fa_[i] = fa_[i + sz] = i + sz;
+            pa_[i] = pa_[i + sz] = i + sz;
         }
         size_.resize(sz + sz, 1);
     }
 
     $ erase(u32 const& x) {
-        fa_[x] = x;
+        pa_[x] = x;
     }
 };
 
