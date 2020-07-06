@@ -2,11 +2,7 @@
 
  一些常用的或不常用的代码模板
 
-## 目的
-
-日常刷题整理了一套模板，越来越长严重拖慢IDE分析速度，遂拆分为常用内容与不常用内容
-
-不常用内容只是不常用而并非完全无用，故备份至GitHub，方便需要时复制，顺便分享之
+日常刷题整理，作为备份兼分享同步至GitHub
 
 ## 个人偏好
 
@@ -17,7 +13,7 @@
 * 代码风格完全按照[yapf](https://github.com/google/yapf)默认配置
   * yapf非常严格以至于写代码时几乎不需要考虑格式，perfect
 * IDE偏好[PyCharm](https://www.jetbrains.com/pycharm/)，代码风格整理稍微弱了点，用yapf补足之后基本完美
-* python + numpy已经足够强大，所以没有模板
+* python + numpy已经足够强大，所以基本没有模板
 
 ### cpp
 
@@ -30,15 +26,9 @@
   * Cleanup Code启用所有选项
     * 理由同yapf
   * 完全禁用Clang-Tidy检查
-    * Clang-Tidy很强大，很严格
-    * 但它给出的warning有太多是想修复也无从下手的，只好直接disable
-    * disable的多了，就觉得不如直接全都禁用了
-    * 仔细区分出哪些检查是需要的哪些是要disable的，是个更好的解决方案
-    * 但我懒
+    * Clang-Tidy太严格了，而且给出的warning有太多是想修复也无从下手的
 * IDE偏好[Visual Studio](https://visualstudio.microsoft.com/)
-  * ReSharper是vs的插件，所以这个选择是理所当然的
-  * 但是写一些简单代码的时候，会用[CLion](https://www.jetbrains.com/clion/)
-  * 虽然CLion性能要求也很高，但与启用了ReSharper的vs相比，速度还是快很多的
+  * 备选[CLion](https://www.jetbrains.com/clion/)
 * 本地环境偏好开到c++latest，但是为了方便在OJ上用，尽量兼容c++17
   * 代码会在msvc和gcc下分别测试
   * 两者都支持的特性，即使未被标准规定，也可能会使用
