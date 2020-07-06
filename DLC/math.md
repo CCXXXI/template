@@ -29,7 +29,7 @@ $ constexpr mul(Int1 a, Int2 b) {
     $ t = static_cast<i64>(
         static_cast<u64>(a) * b
         - static_cast<u64>(static_cast<long double>(a) * b / Mod) * Mod);
-    return Int1(t < 0 ? t + Mod : t);
+    return static_cast<Int1>(t < 0 ? t + Mod : t);
 }
 
 // 快速幂，不依赖Mod素性
