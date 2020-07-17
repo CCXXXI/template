@@ -157,6 +157,16 @@ public:
             }
         }
     }
+
+    // 路径还原，需先求dis[u][v]且指定Path=true
+    $ get_path(u32 C& u, u32 v) C {
+        $ ret = vector<u32>{};
+        for (; v != inf; v = pre[u][v]) {
+            ret.push_back(v);
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
 };
 
 #pragma endregion
