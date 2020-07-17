@@ -64,7 +64,7 @@ $ selection_sort(It first, It last) {
 template <typename It>
 $ insertion_sort(It first, It last) {
     for ($ cur = first; ++cur != last;) {
-        $ const cur_val = *cur;
+        $ C cur_val = *cur;
         $ pos = cur, pre = cur;
         --pre;
         while (*pre > cur_val) {
@@ -137,7 +137,7 @@ $ merge_sort(It first, It last) -> void {
 template <typename It>
 $ quick_sort(It first, It last) -> void {
     if (first != last) {
-        $ const pivot = *(first + (last - first) / 2);
+        $ C pivot = *(first + (last - first) / 2);
         $C mid1 = partition(first, last, [&]($C e) {
             return e < pivot;
         });
@@ -184,7 +184,7 @@ $ heap_sort(It first, It last){
 template <typename It>
 $ counting_sort(It first, It last){
     $C[mi,mx] = minmax_element(first, last);
-    $ const min_val = *mi, max_val = *mx;
+    $ C min_val = *mi, max_val = *mx;
     $ cnt = vector<typename It::value_type>(max_val - min_val + 1);
     for ($ it = first; it != last; ++it) {
         ++cnt[*it - min_val];
@@ -210,7 +210,7 @@ K取1即为计数排序
 template <typename It, u32 K = 64>
 $ bucket_sort(It first, It last){
     $C[mi,mx] = minmax_element(first, last);
-    $ const min_val = *mi, max_val = *mx;
+    $ C min_val = *mi, max_val = *mx;
     $ cnt = vector<vector<typename It::value_type>>((max_val - min_val) / K + 1);
     for ($ it = first; it != last; ++it) {
         cnt[(*it - min_val) / K].push_back(move(*it));

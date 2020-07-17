@@ -27,6 +27,7 @@ using u8 = uint8_t;
 #define $ auto
 #define $$ auto&&
 #define $C auto const&
+#define C const
 
 $ constexpr inf = 0x3f3f3f3f;
 
@@ -55,13 +56,13 @@ $ ccxxxi() {
 
 // cout << pair
 template <typename K, typename V>
-$ operator<<(ostream& o, pair<K, V> const& p) -> auto& {
+$ operator<<(ostream& o, pair<K, V> C& p) -> auto& {
     return o << p.first << " " << p.second << " ";
 }
 
 // cout << vector
 template <typename E>
-$ operator<<(ostream& o, vector<E> const& v) -> auto& {
+$ operator<<(ostream& o, vector<E> C& v) -> auto& {
     for ($$ i : v) {
         o << i << " ";
     }
@@ -70,7 +71,7 @@ $ operator<<(ostream& o, vector<E> const& v) -> auto& {
 
 // py风格print单参数特化
 template <typename T>
-$ print(T const& a) {
+$ print(T C& a) {
 #ifndef ONLINE_JUDGE
     cout << print_style;
 #endif
@@ -82,7 +83,7 @@ $ print(T const& a) {
 
 // py风格print，多参数，空格分隔，尾随换行
 template <typename T, typename... Ts>
-$ print(T const& a, Ts const&... args) {
+$ print(T C& a, Ts C&... args) {
 #ifndef ONLINE_JUDGE
     cout << print_style;
 #endif

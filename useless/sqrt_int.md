@@ -5,7 +5,7 @@
 ------
 
 ```cpp
-$ constexpr sqrt_int(u32 const& n) {
+$ constexpr sqrt_int(u32 C& n) {
     u32 x = 1;
     $ decreased = false;
     while (true) {

@@ -53,7 +53,7 @@ struct IO {
     for (c = gc(); blank(c); c = gc())
       ;
   }
-  inline void push(const char &c) {
+  inline void push(C char &c) {
 #if DEBUG  // 调试，可显示字符
     putchar(c);
 #else

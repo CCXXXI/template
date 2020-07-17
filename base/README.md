@@ -23,6 +23,7 @@ using u8 = uint8_t;
 #define $ auto
 #define $$ auto&&
 #define $C auto const&
+#define C const
 
 $ constexpr inf = 0x3f3f3f3f;
 

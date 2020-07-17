@@ -9,7 +9,7 @@ protected:
     vector<u32> pa_, size_;
 
     // 路径压缩
-    $ find(u32 const& x) -> u32 {
+    $ find(u32 C& x) -> u32 {
         return pa_[x] == x ? x : pa_[x] = find(pa_[x]);
     }
 
@@ -17,7 +17,7 @@ protected:
     dsu() = default;
 
 public:
-    explicit dsu(u32 const& sz) {
+    explicit dsu(u32 C& sz) {
         pa_.resize(sz);
         iota(pa_.begin(), pa_.end(), 0);
         size_.resize(sz, 1);
@@ -36,11 +36,11 @@ public:
         }
     }
 
-    $ same(u32 const& x, u32 const& y) {
+    $ same(u32 C& x, u32 C& y) {
         return find(x) == find(y);
     }
 
-    $ size_of(u32 const& x) {
+    $ size_of(u32 C& x) {
         return size_[find(x)];
     }
 };
@@ -48,7 +48,7 @@ public:
 // 带删除操作的并查集
 class dsu_with_erase : public dsu {
 public:
-    explicit dsu_with_erase(u32 const& sz) {
+    explicit dsu_with_erase(u32 C& sz) {
         pa_.resize(sz + sz);
         for (u32 i = 0; i < sz; ++i) {
             pa_[i] = pa_[i + sz] = i + sz;
@@ -56,7 +56,7 @@ public:
         size_.resize(sz + sz, 1);
     }
 
-    $ erase(u32 const& x) {
+    $ erase(u32 C& x) {
         pa_[x] = x;
     }
 };

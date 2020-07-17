@@ -5,7 +5,7 @@
 
 // 辅助函数，相当于先push再pop
 template <typename E>
-$ push_pop(vector<E>& v, E const& e) {
+$ push_pop(vector<E>& v, E C& e) {
     if (e < v.front()) {
         pop_heap(v.begin(), v.end());
         v.back() = e;
@@ -24,7 +24,7 @@ public:
         crd_arr_t crd;
         Other other;
 
-        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(move(other_in)) {
+        point(crd_arr_t C& crd_in, Other C& other_in): crd(crd_in), other(move(other_in)) {
         }
     };
 
@@ -34,7 +34,7 @@ private:
     vector<point>& points_;
 
     // 以 [first, last) 中的点建树，返回此树的root
-    $ build(u32 const& first, u32 const& last) -> u32 {
+    $ build(u32 C& first, u32 C& last) -> u32 {
         $C r = choose_axis(first, last);
         $C num = last - first;
         $C mid = first + num / 2;
@@ -47,7 +47,7 @@ private:
         else {
             $C b = points_.begin();
             nth_element(b + first, b + mid, b + last,
-                        [&](point const& x, point const& y) {
+                        [&](point C& x, point C& y) {
                             return x.crd[r] < y.crd[r];
                         }
             );
@@ -59,7 +59,7 @@ private:
     }
 
     // 选择 [first, last) 中方差最大的维度
-    $ choose_axis(u32 const& first, u32 const& last) const {
+    $ choose_axis(u32 C& first, u32 C& last) C {
         u32 ret_axis = 0;
         float var_max = 0;
         for (u32 i = 0; i < K; ++i) {
@@ -73,7 +73,7 @@ private:
     }
 
     // 计算 [first, last) 中，维度r的方差
-    $ variance(u32 const& first, u32 const& last, u32 const& r) const {
+    $ variance(u32 C& first, u32 C& last, u32 C& r) C {
         $ sum_x = 0.0f, sum_x2 = 0.0f;
         for ($ i = first; i != last; ++i) {
             $C tmp = static_cast<float>(points_[i].crd[r]);
@@ -98,7 +98,7 @@ private:
     public:
         double dis;
         Other other;
-        $ operator<(ret_t const& a) const {
+        $ operator<(ret_t C& a) C {
             return tie(this->dis, this->other) < tie(a.dis, a.other);
         }
     };
@@ -106,7 +106,7 @@ private:
     ret_t none_{numeric_limits<double>::infinity(), Other()};
 
     // 返回px的欧氏距离的平方，使用浮点数避免平方后溢出
-    $ dis2(crd_arr_t const& p, u32 const& x) {
+    $ dis2(crd_arr_t C& p, u32 C& x) {
         double ret = 0;
         for (u32 i = 0; i != K; ++i) {
             $C dis1 = static_cast<double>(p[i]) - static_cast<double>(points_[x].crd[i]);
@@ -117,9 +117,9 @@ private:
 
 public:
     // 返回距离点p最近的k个点，欧氏距离
-    $ knn(crd_arr_t const& p, u32 const& k) {
+    $ knn(crd_arr_t C& p, u32 C& k) {
         vector<ret_t> ret(k, none_);
-        function<void(u32)> dfs = [&](u32 const& x) {
+        function<void(u32)> dfs = [&](u32 C& x) {
             if (x != inf) {
                 $C r = axis_[x];
                 $C dis_sp = p[r] - points_[x].crd[r];
@@ -150,7 +150,7 @@ public:
         crd_arr_t crd;
         Other other;
 
-        point(crd_arr_t const& crd_in, Other const& other_in): crd(crd_in), other(move(other_in)) {
+        point(crd_arr_t C& crd_in, Other C& other_in): crd(crd_in), other(move(other_in)) {
         }
     };
 
@@ -161,7 +161,7 @@ private:
     vector<point>& points_;
 
     // 以 [first, last) 中的点建树，返回此树的root
-    $ build(u32 const& first, u32 const& last) -> u32 {
+    $ build(u32 C& first, u32 C& last) -> u32 {
         $C r = choose_axis(first, last);
         $C num = last - first;
         $C mid = first + num / 2;
@@ -174,7 +174,7 @@ private:
         else {
             $C b = points_.begin();
             nth_element(b + first, b + mid, b + last,
-                        [&](point const& x, point const& y) {
+                        [&](point C& x, point C& y) {
                             return x.crd[r] < y.crd[r];
                         }
             );
@@ -186,12 +186,12 @@ private:
     }
 
     // 选择 [first, last) 中方差最大的维度
-    $ choose_axis(u32 const& first, u32 const& last) const {
+    $ choose_axis(u32 C& first, u32 C& last) C {
         return variance(first, last, false) < variance(first, last, true);
     }
 
     // 计算 [first, last) 中，维度r的方差
-    $ variance(u32 const& first, u32 const& last, bool const& r) const {
+    $ variance(u32 C& first, u32 C& last, bool C& r) C {
         $ sum_x = 0.0f, sum_x2 = 0.0f;
         for ($ i = first; i != last; ++i) {
             $C tmp = static_cast<float>(points_[i].crd[r]);
@@ -216,7 +216,7 @@ private:
     public:
         double dis;
         Other other;
-        $ operator<(ret_t const& a) const {
+        $ operator<(ret_t C& a) C {
             return tie(this->dis, this->other) < tie(a.dis, a.other);
         }
     };
@@ -224,7 +224,7 @@ private:
     ret_t none_{numeric_limits<double>::infinity(), Other()};
 
     // 返回px的欧氏距离的平方，使用浮点数避免平方后溢出
-    $ dis2(crd_arr_t const& p, u32 const& x) {
+    $ dis2(crd_arr_t C& p, u32 C& x) {
         $C dis_x = static_cast<double>(p[0]) - static_cast<double>(points_[x].crd[0]);
         $C dis_y = static_cast<double>(p[1]) - static_cast<double>(points_[x].crd[1]);
         return sqrt(dis_x * dis_x + dis_y * dis_y);
@@ -232,9 +232,9 @@ private:
 
 public:
     // 返回距离点p最近的k个点，欧氏距离
-    $ knn(crd_arr_t const& p, u32 const& k) {
+    $ knn(crd_arr_t C& p, u32 C& k) {
         vector<ret_t> ret(k, none_);
-        function<void(u32)> dfs = [&](u32 const& x) {
+        function<void(u32)> dfs = [&](u32 C& x) {
             if (x != inf) {
                 $C r = axis_[x];
                 $C dis_sp = p[r] - points_[x].crd[r];

@@ -52,7 +52,7 @@ class prime {
 
 public:
     // 基于费马小定理，进行Miller–Rabin素性测试
-    $ static constexpr check(i64 const& n) {
+    $ static constexpr check(i64 C& n) {
         $ checker = array{2, 3, 5, 7, 11, 13, 17, 19, 23};
 
         for ($$ a : checker) {
@@ -226,7 +226,7 @@ public:
     static_assert(prime::check(Mod));
 
     // 基于费马小定理
-    $ static constexpr inv_prime(i64 const& x) {
+    $ static constexpr inv_prime(i64 C& x) {
         return qpow<Mod>(x, Mod - 2);
     }
 };
@@ -259,7 +259,7 @@ class fac_arr_not_constexpr {
 public:
     vector<i64> fac, fac_inv;
 
-    explicit fac_arr_not_constexpr(u32 const& n, i64 start) {
+    explicit fac_arr_not_constexpr(u32 C& n, i64 start) {
         assert(start + n <= Mod or start>Mod);
         fac.resize(n);
         fac_inv.resize(n);
@@ -314,24 +314,24 @@ public:
 // 组合数，需要用fac_arr来初始化
 template <$ Mod, u32 N>
 class comb {
-    const fac_arr<Mod, N>& fac_;
+    C fac_arr<Mod, N>& fac_;
 
     // 直接利用组合数公式，需要 n < N
-    $ comb1(u32 const& n, u32 const& m) const {
+    $ comb1(u32 C& n, u32 C& m) C {
         return n < m ? 0 : fac_.fac[n] * fac_.fac_inv[m] % Mod * fac_.fac_inv[n - m] % Mod;
     }
 
     // 基于Lucas定理，需要 Mod == N
-    $ comb2(i64 const& n, i64 const& m) const -> i64 {
+    $ comb2(i64 C& n, i64 C& m) C -> i64 {
         return m != 0 ? comb1(static_cast<u32>(n % Mod), static_cast<u32>(m % Mod)) * comb2(n / Mod, m / Mod) % Mod : 1;
     }
 
 public:
-    explicit comb(fac_arr<Mod, N> const& fac_in) : fac_(fac_in) {
+    explicit comb(fac_arr<Mod, N> C& fac_in) : fac_(fac_in) {
     }
 
     // 求n取m的组合数，自动选择合适的算法
-    $ operator()(i64 const& n, i64 const& m) const {
+    $ operator()(i64 C& n, i64 C& m) C {
         if (n < N) {
             return comb1(static_cast<u32>(n), static_cast<u32>(m));
         }
