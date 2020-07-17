@@ -71,7 +71,7 @@ private:
     }
 
 public:
-    // Bellman-Ford算法，队列优化，仅用于有负权时的单源最短路
+    // Bellman-Ford算法，队列优化，仅用于求有负权时的单源最短路，O(nm)
     $ bf(u32 C& start)C {
         dis[start].resize(sz, Inf);
         dis[start][start] = 0;
@@ -91,7 +91,7 @@ public:
         }
     }
 
-    // Dijkstra算法，用于无负权时的单源最短路
+    // Dijkstra算法，用于求无负权时的单源最短路，O(mlgm)
     $ dij(u32 C& start)C {
         dis[start].resize(sz, Inf);
         dis[start][start] = 0;
@@ -108,6 +108,24 @@ public:
             for ($$ e : g[u]) {
                 if (relax(start, u, e)) {
                     que.emplace(dis[start][e.to], e.to);
+                }
+            }
+        }
+    }
+
+    // Floyd–Warshall算法，用于求全源最短路，O(n^3)
+    $ fw()C {
+        for (u32 i = 0; i != sz; ++i) {
+            dis[i].resize(sz, Inf);
+            for ($C e : g[i]) {
+                dis[i][e.to] = e.cost;
+            }
+            dis[i][i] = 0;
+        }
+        for (u32 k = 0; k != sz; ++k) {
+            for (u32 i = 0; i != sz; ++i) {
+                for (u32 j = 0; j != sz; ++j) {
+                    dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
                 }
             }
         }
