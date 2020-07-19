@@ -98,7 +98,7 @@ public:
     }
 
     // 检查是否为二分图，即无奇环
-    $ binary_check()C {
+    $ binary_check() C {
         vector<i8> color(sz);
         function<bool(u32, i8)> dfs = [&](u32 C& v, i8 C& c) {
             color[v] = c;
@@ -126,7 +126,7 @@ public:
 private:
     // 以u到v的边e更新dis[start][v]
     template <bool Path = false>
-    $ relax(u32 C& start, u32 C& u, edge C& e)C {
+    $ relax(u32 C& start, u32 C& u, edge C& e) C {
         $C tmp = dis[start][u] + e.cost;
         if (tmp < dis[start][e.to]) {
             dis[start][e.to] = tmp;
@@ -141,7 +141,7 @@ private:
 public:
     // Bellman-Ford算法，队列优化，仅用于求有负权时的单源最短路，O(nm)
     template <bool Path = false>
-    $ dis_bf(u32 C& start)C {
+    $ dis_bf(u32 C& start) C {
         dis[start].resize(sz, Inf);
         dis[start][start] = 0;
         $ que = queue<u32>{};
@@ -165,7 +165,7 @@ public:
 
     // Dijkstra算法，用于求无负权时的单源最短路，O(mlgm)
     template <bool Path = false>
-    $ dis_dij(u32 C& start)C {
+    $ dis_dij(u32 C& start) C {
         dis[start].resize(sz, Inf);
         dis[start][start] = 0;
         using p_t = pair<Cost, u32>;
@@ -191,7 +191,7 @@ public:
 
     // Floyd–Warshall算法，用于求全源最短路，O(n^3)
     template <bool Path = false>
-    $ dis_fw()C {
+    $ dis_fw() C {
         for (u32 i = 0; i != sz; ++i) {
             dis[i].resize(sz, Inf);
             if constexpr (Path) {
@@ -227,6 +227,46 @@ public:
             ret.push_back(v);
         }
         reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
+
+// 带边权的图，直接存边，用于求最小生成树
+template <typename Cost = int>
+class graph_with_cost_mst {
+    class edge {
+    public:
+        u32 u, v;
+        Cost cost;
+
+        $ operator<(edge C& e) C {
+            return this->cost < e.cost;
+        }
+    };
+
+    vector<edge> es_;
+    u32 sz_;
+public:
+    // 以顶点数初始化
+    explicit graph_with_cost_mst(u32 C& sz_in) : sz_(sz_in) {
+    }
+
+    // 添加uv之间，权值为cost的双向边
+    $ add(u32 C& u, u32 C& v, Cost C& cost) {
+        es_.push_back(edge{u, v, cost});
+    }
+
+    // 最小生成树，基于Kruskal算法
+    $ mst() {
+        sort(es_.begin(), es_.end());
+        dsu dsu(sz_);
+        Cost ret = 0;
+        for ($C e : es_) {
+            if (!dsu.same(e.u, e.v)) {
+                dsu.unite(e.u, e.v);
+                ret += e.cost;
+            }
+        }
         return ret;
     }
 };
