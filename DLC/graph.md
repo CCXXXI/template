@@ -246,6 +246,7 @@ class graph_with_cost_mst {
 
     vector<edge> es_;
     u32 sz_;
+
 public:
     // 以顶点数初始化
     explicit graph_with_cost_mst(u32 C& sz_in) : sz_(sz_in) {
