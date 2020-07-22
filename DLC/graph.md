@@ -184,14 +184,12 @@ public:
             que.pop();
             in_que[u] = false;
             for ($C e : g[u]) {
-                if (relax(sz, u, e)) {
+                if (relax(sz, u, e) and !in_que[e.to]) {
                     if (++upd_tm[e.to] == sz) {
                         return true;
                     }
-                    if (!in_que[e.to]) {
-                        que.push(e.to);
-                        in_que[e.to] = true;
-                    }
+                    que.push(e.to);
+                    in_que[e.to] = true;
                 }
             }
         }
