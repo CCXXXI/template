@@ -81,9 +81,14 @@ public:
     u32 sz;
 
     explicit graph_with_cost(u32 C& sz_in) : sz(sz_in) {
-        g.resize(sz);
-        dis.resize(sz);
+        g.resize(sz + 1);
+        dis.resize(sz + 1);
         pre.resize(sz);
+
+        g[sz].reserve(sz);
+        for (u32 i = 0; i != sz; ++i) {
+            g[sz].push_back(edge{i, 0});
+        }
     }
 
     // 添加u到v，权值为cost的单向边
@@ -98,7 +103,7 @@ public:
     }
 
     // 检查是否为二分图，即无奇环
-    $ binary_check() C {
+    $ binary_check()C {
         vector<i8> color(sz);
         function<bool(u32, i8)> dfs = [&](u32 C& v, i8 C& c) {
             color[v] = c;
@@ -127,6 +132,9 @@ private:
     // 以u到v的边e更新dis[start][v]
     template <bool Path = false>
     $ relax(u32 C& start, u32 C& u, edge C& e) C {
+        if (dis[start][u] == Inf) {
+            return false;
+        }
         $C tmp = dis[start][u] + e.cost;
         if (tmp < dis[start][e.to]) {
             dis[start][e.to] = tmp;
@@ -139,7 +147,7 @@ private:
     }
 
 public:
-    // Bellman-Ford算法，队列优化，仅用于求有负权时的单源最短路，O(nm)
+    // 求有负权时的单源最短路，基于Bellman-Ford算法，队列优化，O(nm)
     template <bool Path = false>
     $ dis_bf(u32 C& start) C {
         dis[start].resize(sz, Inf);
@@ -163,7 +171,34 @@ public:
         }
     }
 
-    // Dijkstra算法，用于求无负权时的单源最短路，O(mlgm)
+    // 检查是否存在负环，基于Bellman-Ford算法
+    $ nl_check()C {
+        dis[sz].resize(sz + 1, Inf);
+        dis[sz][sz] = 0;
+        $ que = queue<u32>{};
+        que.push(sz);
+        $ in_que = vector<bool>(sz + 1);
+        $ upd_tm = vector<u32>(sz, 0);
+        while (!que.empty()) {
+            $ C u = que.front();
+            que.pop();
+            in_que[u] = false;
+            for ($C e : g[u]) {
+                if (relax(sz, u, e)) {
+                    if (++upd_tm[e.to] == sz) {
+                        return true;
+                    }
+                    if (!in_que[e.to]) {
+                        que.push(e.to);
+                        in_que[e.to] = true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // 求无负权时的单源最短路，基于Dijkstra算法，O(mlgm)
     template <bool Path = false>
     $ dis_dij(u32 C& start) C {
         dis[start].resize(sz, Inf);
@@ -189,9 +224,9 @@ public:
         }
     }
 
-    // Floyd–Warshall算法，用于求全源最短路，O(n^3)
+    // 求全源最短路，基于Floyd–Warshall算法，O(n^3)
     template <bool Path = false>
-    $ dis_fw() C {
+    $ dis_fw()C {
         for (u32 i = 0; i != sz; ++i) {
             dis[i].resize(sz, Inf);
             if constexpr (Path) {
