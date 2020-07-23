@@ -215,6 +215,16 @@ $ constexpr qpow(Int1 base, Int2 e) {
 
 #pragma region inv and fac and comb
 
+// 求ax+by=gcd(a,b)的解，返回(x,y,d)
+template <typename Int>
+$ ex_gcd(Int C& a, Int C& b) {
+    if (b == 0) {
+        return tuple{1, 0, a};
+    }
+    $$[x, y, d] = ex_gcd(b, a % b);
+    return tuple{y, x - a / b * y, d};
+}
+
 // 逆元
 template <$ Mod>
 class inv {
@@ -260,7 +270,7 @@ public:
     vector<i64> fac, fac_inv;
 
     explicit fac_arr_not_constexpr(u32 C& n, i64 start) {
-        assert(start + n <= Mod or start>Mod);
+        assert(start + n <= Mod or start > Mod);
         fac.resize(n);
         fac_inv.resize(n);
         fac[0] = start != 0 ? (start %= Mod) : 1;
