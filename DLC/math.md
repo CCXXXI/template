@@ -218,7 +218,7 @@ $ constexpr qpow(Int1 base, Int2 e) {
 // 求ax+by=gcd(a,b)的解，返回(x,y,d)
 $ constexpr ex_gcd(i64 C& a, i64 C& b) {
     if (b == 0) {
-        return array{1ll, 0ll, a};
+        return array<i64, 3>{1, 0, a};
     }
     $$[x, y, d] = ex_gcd(b, a % b);
     return array{y, x - a / b * y, d};
