@@ -336,10 +336,10 @@ public:
     }
 };
 
-// 组合数，需要用fac_arr来初始化
+// 组合数，应满足 n < N or Mod == N
 template <$ Mod, u32 N>
 class comb {
-    C fac_arr<Mod, N>& fac_;
+    C fac_arr<Mod, N> fac_{};
 
     // 直接利用组合数公式，需要 n < N
     $ comb1(u32 C& n, u32 C& m) C {
@@ -352,9 +352,6 @@ class comb {
     }
 
 public:
-    explicit comb(fac_arr<Mod, N> C& fac_in) : fac_(fac_in) {
-    }
-
     // 求n取m的组合数，自动选择合适的算法
     $ operator()(i64 C& n, i64 C& m) C {
         if (n < N) {
@@ -389,7 +386,7 @@ $ main() -> int {
     static_assert(inv<10>(3) == 7);
     static_assert(inv<11>(3) == 4);
 
-    $C c = comb(fac_arr<7, 7>{});
+    $C c = comb<7, 7>();
     assert(c(5, 2) == 3);
 }
 
