@@ -216,7 +216,7 @@ $ constexpr qpow(Int1 base, Int2 e) {
 #pragma region inv and fac and comb
 
 // 求ax+by=gcd(a,b)的解，返回(x,y,d)
-$ ex_gcd(i64 C& a, i64 C& b) {
+$ constexpr ex_gcd(i64 C& a, i64 C& b) {
     if (b == 0) {
         return array{1ll, 0ll, a};
     }
@@ -238,7 +238,7 @@ public:
 
     // 基于扩展欧几里得算法
     $ static constexpr inv_not_prime(i64 C& x) {
-        $$ ret = ex_gcd(x, Mod)[0];
+        $ ret = ex_gcd(x, Mod)[0];
         if (ret < 0) {
             ret += Mod;
         }
@@ -376,18 +376,21 @@ public:
 $ main() -> int {
     ccxxxi();
 
-    cout << qpow(2, 10) << "\n";
-    cout << qpow<100>(2, 10) << "\n";
-    cout << qpow<1021>(2, 10) << "\n";
+    static_assert(qpow(2, 10) == 1024);
+    static_assert(qpow<100>(2, 10) == 24);
+    static_assert(qpow<1021>(2, 10) == 3);
 
-    $ constexpr test = prime::check(998'244'353);
-    cout << boolalpha << test << "\n";
+    static_assert(prime::check(998'244'353));
 
     $ constexpr pri = prime_arr<200>{};
-    cout << pri.cnt << " " << pri.pri[pri.cnt - 1] << "\n";
+    static_assert(pri.cnt == 46);
+    static_assert(pri.pri[pri.cnt - 1] == 199);
+
+    static_assert(inv<10>(3) == 7);
+    static_assert(inv<11>(3) == 4);
 
     $C c = comb(fac_arr<7, 7>{});
-    cout << c(5, 2) << "\n";
+    assert(c(5, 2) == 3);
 }
 
 ```
