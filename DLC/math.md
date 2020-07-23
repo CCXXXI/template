@@ -216,30 +216,45 @@ $ constexpr qpow(Int1 base, Int2 e) {
 #pragma region inv and fac and comb
 
 // 求ax+by=gcd(a,b)的解，返回(x,y,d)
-template <typename Int>
-$ ex_gcd(Int C& a, Int C& b) {
+$ ex_gcd(i64 C& a, i64 C& b) {
     if (b == 0) {
-        return tuple{1, 0, a};
+        return array{1ll, 0ll, a};
     }
     $$[x, y, d] = ex_gcd(b, a % b);
-    return tuple{y, x - a / b * y, d};
+    return array{y, x - a / b * y, d};
 }
 
 // 逆元
 template <$ Mod>
-class inv {
+class inv_helper {
     // 此class仅用作封装，不应实例化
-    inv() = delete;
+    inv_helper() = delete;
 
 public:
-    // 非素数遇到再写吧
-    static_assert(prime::check(Mod));
-
     // 基于费马小定理
     $ static constexpr inv_prime(i64 C& x) {
         return qpow<Mod>(x, Mod - 2);
     }
+
+    // 基于扩展欧几里得算法
+    $ static constexpr inv_not_prime(i64 C& x) {
+        $$ ret = ex_gcd(x, Mod)[0];
+        if (ret < 0) {
+            ret += Mod;
+        }
+        return ret;
+    }
+
 };
+
+// 求x的逆元，自动选择合适的算法
+template <$ Mod>
+$ constexpr inv(i64 C& x) {
+    if constexpr (prime::check(Mod)) {
+        return inv_helper<Mod>::inv_prime(x);
+    }
+    return inv_helper<Mod>::inv_not_prime(x);
+}
 
 // 阶乘及其逆元，Start不为0时推广为前缀积
 template <$ Mod, u32 N, i64 Start = 0>
@@ -256,7 +271,7 @@ public:
         for (u32 i = 1; i < N; ++i) {
             fac[i] = fac[i - 1] * ((start + i) % Mod) % Mod;
         }
-        fac_inv[N - 1] = inv<Mod>::inv_prime(fac[N - 1]);
+        fac_inv[N - 1] = inv<Mod>(fac[N - 1]);
         for ($ i = N - 1; i > 0; --i) {
             fac_inv[i - 1] = fac_inv[i] * ((start + i) % Mod) % Mod;
         }
@@ -277,7 +292,7 @@ public:
         for (u32 i = 1; i < n; ++i) {
             fac[i] = fac[i - 1] * ((start + i) % Mod) % Mod;
         }
-        fac_inv[n - 1] = inv<Mod>::inv_prime(fac[n - 1]);
+        fac_inv[n - 1] = inv<Mod>(fac[n - 1]);
         for ($ i = n - 1; i > 0; --i) {
             fac_inv[i - 1] = fac_inv[i] * ((start + i) % Mod) % Mod;
         }
@@ -297,7 +312,7 @@ public:
             arr[i] = tmp.fac[i - 1] * tmp.fac_inv[i] % Mod;
         }
         if constexpr (Start != 0) {
-            arr[0] = inv<Mod>::inv_prime(Start);
+            arr[0] = inv<Mod>(Start);
         }
     }
 };
@@ -316,7 +331,7 @@ public:
             arr[i] = tmp.fac[i - 1] * tmp.fac_inv[i] % Mod;
         }
         if (start != 0) {
-            arr[0] = inv<Mod>::inv_prime(start);
+            arr[0] = inv<Mod>(start);
         }
     }
 };
