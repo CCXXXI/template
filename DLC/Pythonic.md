@@ -69,6 +69,15 @@ $ operator<<(ostream& o, vector<E> C& v) -> auto& {
     return o;
 }
 
+// cout << array
+template <typename T, u32 N>
+$ operator<<(ostream& o, array<T, N> C& arr) -> auto& {
+    for ($$ i : arr) {
+        o << i << " ";
+    }
+    return o;
+}
+
 // py风格print单参数特化
 template <typename T>
 $ print(T C& a) {
