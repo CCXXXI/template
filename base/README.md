@@ -27,7 +27,8 @@ using u8 = uint8_t;
 
 $ constexpr inf = 0x3f3f3f3f;
 
-$ ccxxxi() {
+$ ccxxxi()
+{
 #ifdef ONLINE_JUDGE
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -36,9 +37,10 @@ $ ccxxxi() {
 
 #pragma endregion
 
-$ main() -> int {
+$ main() -> int
+{
     ccxxxi();
-    
+
     cout << "Hello world!\n";
 }
 

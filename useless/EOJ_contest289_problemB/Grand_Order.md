@@ -11,8 +11,10 @@
 
 // 辅助函数，相当于先push再pop
 template <typename E>
-$ push_pop(vector<E>& v, E C& e) {
-    if (e < v.front()) {
+$ push_pop(vector<E>& v, E C& e)
+{
+    if (e < v.front())
+    {
         pop_heap(v.begin(), v.end());
         v.back() = e;
         push_heap(v.begin(), v.end());
@@ -21,16 +23,19 @@ $ push_pop(vector<E>& v, E C& e) {
 
 // 期末作业特化版kdt，在build与search的耗时之间取得了绝妙的平衡
 template <typename Crd, typename Other>
-class _2dt {
+class _2dt
+{
 public:
     using crd_arr_t = array<Crd, 2>;
 
-    class point {
+    class point
+    {
     public:
         crd_arr_t crd;
         Other other;
 
-        point(crd_arr_t C& crd_in, Other C& other_in): crd(crd_in), other(move(other_in)) {
+        point(crd_arr_t C& crd_in, Other C& other_in) : crd(crd_in), other(move(other_in))
+        {
         }
     };
 
@@ -44,20 +49,25 @@ private:
 
     // 以 [first, last) 中的点建树，返回此树的root
     // 特化：维度交替选择xy，节省计算方差的时间
-    $ build(u32 C& first, u32 C& last, bool C& r) -> u32 {
+    $ build(u32 C& first, u32 C& last, bool C& r) -> u32
+    {
         // $C r = choose_axis(first, last);
         $C num = last - first;
         $C mid = first + num / 2;
-        if (num == 1) {
+        if (num == 1)
+        {
         }
-        else if (num == 2) {
+        else if (num == 2)
+        {
             // axis_[mid] = r;
             (points_[first].crd[r] <= points_[mid].crd[r] ? lc_[mid] : rc_[mid]) = first;
         }
-        else {
+        else
+        {
             $C b = points_.begin();
             nth_element(b + first, b + mid, b + last,
-                        [&](point C& x, point C& y) {
+                        [&](point C& x, point C& y)
+                        {
                             return x.crd[r] < y.crd[r];
                         }
             );
@@ -69,14 +79,17 @@ private:
     }
 
     // 选择 [first, last) 中方差最大的维度
-    $ choose_axis(u32 C& first, u32 C& last) C {
+    $ choose_axis(u32 C& first, u32 C& last) C
+    {
         return variance(first, last, false) < variance(first, last, true);
     }
 
     // 计算 [first, last) 中，维度r的方差
-    $ variance(u32 C& first, u32 C& last, bool C& r) C {
+    $ variance(u32 C& first, u32 C& last, bool C& r) C
+    {
         $ sum_x = 0.0f, sum_x2 = 0.0f;
-        for ($ i = first; i != last; ++i) {
+        for ($ i = first; i != last; ++i)
+        {
             $C tmp = static_cast<float>(points_[i].crd[r]);
             sum_x += tmp;
             sum_x2 += tmp * tmp;
@@ -86,7 +99,8 @@ private:
 
 public:
     // 以vector<point>初始化，之后外部不应修改此vector
-    explicit _2dt(vector<point>& points_in) : points_(points_in) {
+    explicit _2dt(vector<point>& points_in) : points_(points_in)
+    {
         $C sz = points_.size();
         // 特化：首次分割时，仍然计算方差并选择较优的维度
         beg_ = choose_axis(0, sz);
@@ -97,11 +111,13 @@ public:
     }
 
 private:
-    class ret_t {
+    class ret_t
+    {
     public:
         double dis;
         Other other;
-        $ operator<(ret_t C& a) C {
+        $ operator<(ret_t C& a) C
+        {
             return tie(this->dis, this->other) < tie(a.dis, a.other);
         }
     };
@@ -109,7 +125,8 @@ private:
     ret_t none_{numeric_limits<double>::infinity(), Other()};
 
     // 返回px的欧氏距离的平方，使用浮点数避免平方后溢出
-    $ dis2(crd_arr_t C& p, u32 C& x) {
+    $ dis2(crd_arr_t C& p, u32 C& x)
+    {
         $C dis_x = static_cast<double>(p[0]) - static_cast<double>(points_[x].crd[0]);
         $C dis_y = static_cast<double>(p[1]) - static_cast<double>(points_[x].crd[1]);
         // 特化：经过反复测试，这种看上去很不正常的四舍五入方式是最快的
@@ -118,17 +135,21 @@ private:
 
 public:
     // 返回距离点p最近的k个点，欧氏距离
-    $ knn(crd_arr_t C& p, u32 C& k) {
+    $ knn(crd_arr_t C& p, u32 C& k)
+    {
         vector<ret_t> ret(k, none_);
-        function<void(u32, bool)> dfs = [&](u32 C& x, bool C& r) {
-            if (x != inf) {
+        function<void(u32, bool)> dfs = [&](u32 C& x, bool C& r)
+        {
+            if (x != inf)
+            {
                 // $C r = axis_[x];
                 $C dis_sp = p[r] - points_[x].crd[r];
                 $C left = dis_sp <= 0;
                 dfs(left ? lc_[x] : rc_[x], !r);
                 $C tmp = ret_t{dis2(p, x), points_[x].other};
                 push_pop(ret, tmp);
-                if (abs(dis_sp) <= ret.front().dis) {
+                if (abs(dis_sp) <= ret.front().dis)
+                {
                     dfs(left ? rc_[x] : lc_[x], !r);
                 }
             }

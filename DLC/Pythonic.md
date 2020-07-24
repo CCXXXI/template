@@ -45,7 +45,8 @@ $ constexpr debug_style = "\033[32;1m"; // 绿色加亮
 #define DBG(x)
 #endif
 
-$ ccxxxi() {
+$ ccxxxi()
+{
 #ifdef ONLINE_JUDGE
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -56,14 +57,17 @@ $ ccxxxi() {
 
 // cout << pair
 template <typename K, typename V>
-$ operator<<(ostream& o, pair<K, V> C& p) -> auto& {
+$ operator<<(ostream& o, pair<K, V> C& p) -> auto&
+{
     return o << p.first << " " << p.second << " ";
 }
 
 // cout << vector
 template <typename E>
-$ operator<<(ostream& o, vector<E> C& v) -> auto& {
-    for ($$ i : v) {
+$ operator<<(ostream& o, vector<E> C& v) -> auto&
+{
+    for ($$ i : v)
+    {
         o << i << " ";
     }
     return o;
@@ -71,8 +75,10 @@ $ operator<<(ostream& o, vector<E> C& v) -> auto& {
 
 // cout << array
 template <typename T, u32 N>
-$ operator<<(ostream& o, array<T, N> C& arr) -> auto& {
-    for ($$ i : arr) {
+$ operator<<(ostream& o, array<T, N> C& arr) -> auto&
+{
+    for ($$ i : arr)
+    {
         o << i << " ";
     }
     return o;
@@ -80,7 +86,8 @@ $ operator<<(ostream& o, array<T, N> C& arr) -> auto& {
 
 // py风格print单参数特化
 template <typename T>
-$ print(T C& a) {
+$ print(T C& a)
+{
 #ifndef ONLINE_JUDGE
     cout << print_style;
 #endif
@@ -92,7 +99,8 @@ $ print(T C& a) {
 
 // py风格print，多参数，空格分隔，尾随换行
 template <typename T, typename... Ts>
-$ print(T C& a, Ts C&... args) {
+$ print(T C& a, Ts C&... args)
+{
 #ifndef ONLINE_JUDGE
     cout << print_style;
 #endif
@@ -102,7 +110,8 @@ $ print(T C& a, Ts C&... args) {
 
 #pragma endregion
 
-$ main() -> int {
+$ main() -> int
+{
     ccxxxi();
 
     DBG(1 + 1);
@@ -111,8 +120,9 @@ $ main() -> int {
     $C v = vector{2, 3, 1};
     $C hello = "Hello";
     $C world = "world!";
-    
+
     print(p, v);
     print(hello, world);
 }
+
 ```

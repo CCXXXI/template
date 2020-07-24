@@ -16,15 +16,20 @@
 
 ```cpp
 template <typename It>
-$ bubble_sort(It first, It last) {
-    for ($ ok = false; !ok; --last) {
+$ bubble_sort(It first, It last)
+{
+    for ($ ok = false; !ok; --last)
+    {
         ok = true;
-        for ($ cur = first;; ++cur) {
+        for ($ cur = first;; ++cur)
+        {
             $ next = cur;
-            if (++next == last) {
+            if (++next == last)
+            {
                 break;
             }
-            if (*cur > *next) {
+            if (*cur > *next)
+            {
                 ok = false;
                 iter_swap(cur, next);
             }
@@ -42,8 +47,10 @@ $ bubble_sort(It first, It last) {
 
 ```cpp
 template <typename It>
-$ selection_sort(It first, It last) {
-    for (; first != last; ++first) {
+$ selection_sort(It first, It last)
+{
+    for (; first != last; ++first)
+    {
         iter_swap(first, min_element(first, last));
     }
 }
@@ -62,17 +69,22 @@ $ selection_sort(It first, It last) {
 
 ```cpp
 template <typename It>
-$ insertion_sort(It first, It last) {
-    for ($ cur = first; ++cur != last;) {
+$ insertion_sort(It first, It last)
+{
+    for ($ cur = first; ++cur != last;)
+    {
         $ C cur_val = *cur;
         $ pos = cur, pre = cur;
         --pre;
-        while (*pre > cur_val) {
+        while (*pre > cur_val)
+        {
             *pos-- = move(*pre);
-            if (pre != first) {
+            if (pre != first)
+            {
                 --pre;
             }
-            else {
+            else
+            {
                 break;
             }
         }
@@ -90,11 +102,15 @@ $ insertion_sort(It first, It last) {
 
 ```cpp
 template <typename It, u32 Inc>
-$ shell_sort(It first, It last) {
-    for ($ cur = first + Inc; cur < last; ++cur) {
-        for ($ pre = cur - Inc; *pre > pre[Inc];) {
+$ shell_sort(It first, It last)
+{
+    for ($ cur = first + Inc; cur < last; ++cur)
+    {
+        for ($ pre = cur - Inc; *pre > pre[Inc];)
+        {
             iter_swap(pre, pre + Inc);
-            if (pre - first >= Inc) {
+            if (pre - first >= Inc)
+            {
                 pre -= Inc;
             }
         }
@@ -113,9 +129,11 @@ $ shell_sort(It first, It last) {
 
 ```cpp
 template <typename It>
-$ merge_sort(It first, It last) -> void {
+$ merge_sort(It first, It last) -> void
+{
     $C num = last - first;
-    if (num > 1) {
+    if (num > 1)
+    {
         $C mid = first + num / 2;
         merge_sort(first, mid);
         merge_sort(mid, last);
@@ -135,13 +153,17 @@ $ merge_sort(It first, It last) -> void {
 
 ```cpp
 template <typename It>
-$ quick_sort(It first, It last) -> void {
-    if (first != last) {
+$ quick_sort(It first, It last) -> void
+{
+    if (first != last)
+    {
         $ C pivot = *(first + (last - first) / 2);
-        $C mid1 = partition(first, last, [&]($C e) {
+        $C mid1 = partition(first, last, [&]($C e)
+        {
             return e < pivot;
         });
-        $C mid2 = partition(mid1, last, [&]($C e) {
+        $C mid2 = partition(mid1, last, [&]($C e)
+        {
             return e <= pivot;
         });
         quick_sort(first, mid1);
@@ -161,7 +183,8 @@ $ quick_sort(It first, It last) -> void {
 
 ```cpp
 template <typename It>
-$ heap_sort(It first, It last){
+$ heap_sort(It first, It last)
+{
     make_heap(first, last);
     sort_heap(first, last);
 }
@@ -182,15 +205,19 @@ $ heap_sort(It first, It last){
 
 ```cpp
 template <typename It>
-$ counting_sort(It first, It last){
-    $C[mi,mx] = minmax_element(first, last);
+$ counting_sort(It first, It last)
+{
+    $C[mi, mx] = minmax_element(first, last);
     $ C min_val = *mi, max_val = *mx;
     $ cnt = vector<typename It::value_type>(max_val - min_val + 1);
-    for ($ it = first; it != last; ++it) {
+    for ($ it = first; it != last; ++it)
+    {
         ++cnt[*it - min_val];
     }
-    for ($ val = min_val; val <= max_val; ++val) {
-        while (cnt[val - min_val]--) {
+    for ($ val = min_val; val <= max_val; ++val)
+    {
+        while (cnt[val - min_val]--)
+        {
             *first++ = val;
         }
     }
@@ -208,16 +235,20 @@ K取1即为计数排序
 
 ```cpp
 template <typename It, u32 K = 64>
-$ bucket_sort(It first, It last){
-    $C[mi,mx] = minmax_element(first, last);
+$ bucket_sort(It first, It last)
+{
+    $C[mi, mx] = minmax_element(first, last);
     $ C min_val = *mi, max_val = *mx;
     $ cnt = vector<vector<typename It::value_type>>((max_val - min_val) / K + 1);
-    for ($ it = first; it != last; ++it) {
+    for ($ it = first; it != last; ++it)
+    {
         cnt[(*it - min_val) / K].push_back(move(*it));
     }
-    for ($$ c : cnt) {
+    for ($$ c : cnt)
+    {
         sort(c.begin(), c.end());
-        for ($$ i : c) {
+        for ($$ i : c)
+        {
             *first++ = move(i);
         }
     }
@@ -243,10 +274,12 @@ $ bucket_sort(It first, It last){
 
 ```cpp
 template <typename It>
-$ monkey_sort(It first, It last) {
+$ monkey_sort(It first, It last)
+{
     $ rd = random_device();
     $ monkey = mt19937(rd());
-    while (!is_sorted(first, last)) {
+    while (!is_sorted(first, last))
+    {
         shuffle(first, last, monkey);
     }
 }
@@ -261,7 +294,8 @@ $ monkey_sort(It first, It last) {
 
 ```cpp
 template <typename It>
-$ multiset_sort(It first, It last) {
+$ multiset_sort(It first, It last)
+{
     $C tmp = multiset(first, last);
     move(tmp.begin(), tmp.end(), first);
 }

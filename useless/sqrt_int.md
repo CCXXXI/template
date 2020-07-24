@@ -5,12 +5,15 @@
 ------
 
 ```cpp
-$ constexpr sqrt_int(u32 C& n) {
+$ constexpr sqrt_int(u32 C& n)
+{
     u32 x = 1;
     $ decreased = false;
-    while (true) {
+    while (true)
+    {
         $C nx = (x + n / x) / 2;
-        if (x == nx or nx > x and decreased) {
+        if (x == nx or nx > x and decreased)
+        {
             break;
         }
         decreased = nx < x;
