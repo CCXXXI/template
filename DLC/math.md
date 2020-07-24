@@ -342,18 +342,18 @@ class comb {
     C fac_arr<Mod, N> fac_{};
 
     // 直接利用组合数公式，需要 n < N
-    $ comb1(u32 C& n, u32 C& m) C {
+    $ constexpr comb1(u32 C& n, u32 C& m) C {
         return n < m ? 0 : fac_.fac[n] * fac_.fac_inv[m] % Mod * fac_.fac_inv[n - m] % Mod;
     }
 
     // 基于Lucas定理，需要 Mod == N
-    $ comb2(i64 C& n, i64 C& m) C -> i64 {
+    $ constexpr comb2(i64 C& n, i64 C& m) C -> i64 {
         return m != 0 ? comb1(static_cast<u32>(n % Mod), static_cast<u32>(m % Mod)) * comb2(n / Mod, m / Mod) % Mod : 1;
     }
 
 public:
     // 求n取m的组合数，自动选择合适的算法
-    $ operator()(i64 C& n, i64 C& m) C {
+    $ constexpr operator()(i64 C& n, i64 C& m) C {
         if (n < N) {
             return comb1(static_cast<u32>(n), static_cast<u32>(m));
         }
@@ -386,8 +386,8 @@ $ main() -> int {
     static_assert(inv<10>(3) == 7);
     static_assert(inv<11>(3) == 4);
 
-    $C c = comb<7, 7>();
-    assert(c(5, 2) == 3);
+    $ constexpr c = comb<7, 7>();
+    static_assert(c(5, 2) == 3);
 }
 
 ```
