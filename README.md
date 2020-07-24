@@ -8,17 +8,12 @@
 
 ### python
 
-* 代码风格完全按照[yapf](https://github.com/google/yapf)默认配置
+* 代码风格按照[yapf](https://github.com/google/yapf)默认配置
 * IDE偏好[PyCharm](https://www.jetbrains.com/pycharm/)
 
 ### cpp
 
-* 代码风格大部分按照[ReSharper](https://www.jetbrains.com/dotnet/)默认配置，以下例外：
-  * 缩进设定为4个空格
-  * 括号设定为[K&R style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style)
-    * 其实想用[Lisp style](https://en.wikipedia.org/wiki/Indentation_style#Lisp_style)（或者叫Python style），但主流IDE一般不支持这个
-  * Cleanup Code启用所有选项
-  * 禁用Clang-Tidy检查
+* 代码风格按照[ReSharper](https://www.jetbrains.com/dotnet/)默认配置
 * IDE偏好[Visual Studio](https://visualstudio.microsoft.com/)
   * 备选[CLion](https://www.jetbrains.com/clion/)
 
