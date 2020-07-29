@@ -2,6 +2,8 @@
 
 [stdc++.h](./stdc++.h)为了在vs下正常工作而进行了修改，顺带一提原版最新版在[这里](https://raw.githubusercontent.com/gcc-mirror/gcc/master/libstdc%2B%2B-v3/include/precompiled/stdc%2B%2B.h)
 
+<!-- 以下代码应与[此处](../DLC/Pythonic.md)同时修改 -->
+
 ------
 
 ```cpp
