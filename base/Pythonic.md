@@ -31,10 +31,6 @@ using u8 = uint8_t;
 
 $ constexpr inf = 0x3f3f3f3f;
 
-#pragma endregion
-
-#pragma region Pythonic
-
 #ifndef ONLINE_JUDGE
 // 给单调的黑框框加点色彩
 $ constexpr input_style = "\033[34;1m"; // 蓝色加亮
