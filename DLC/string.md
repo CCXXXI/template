@@ -3,7 +3,7 @@
 ------
 
 ```cpp
-#pragma region graph
+#pragma region string
 
 // Z函数
 $ z_func(string C& s)
