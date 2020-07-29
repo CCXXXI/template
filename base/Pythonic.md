@@ -9,7 +9,7 @@
 ------
 
 ```cpp
-#pragma region base
+#pragma region Pythonic
 
 #include "bits/stdc++.h"
 
