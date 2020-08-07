@@ -1,0 +1,86 @@
+# 线段树
+
+------
+
+```cpp
+#pragma region segment tree
+
+// 线段树，点修改、区间查询
+template <typename T = int>
+class sgt
+{
+    u32 n_ = 1;
+    vector<T> tree_;
+    T init_val_;
+    function<T(T, T)> func_;
+
+    $ build()
+    {
+        for ($ i = n_ - 1; i != 0;)
+        {
+            --i;
+            tree_[i] = func_(tree_[(i << 1) + 1], tree_[(i << 1) + 2]);
+        }
+    }
+
+public:
+    sgt(u32 C& n, T C& init_val, function<T(T, T)>C& func)
+        : init_val_(init_val), func_(func)
+    {
+        while (n_ < n)
+        {
+            n_ <<= 1;
+        }
+        tree_.resize(n_ * 2 - 1, init_val_);
+    }
+
+    sgt(vector<T>&& a, T C& init_val, function<T(T, T)>C& func)
+        : sgt(a.size(), init_val, func)
+    {
+        move(a.begin(), a.end(), tree_.begin() + n_ - 1);
+        build();
+    }
+
+    sgt(vector<T>C& a, T C& init_val, function<T(T, T)>C& func)
+        : sgt(a.size(), init_val, func)
+    {
+        copy(a.begin(), a.end(), tree_.begin() + n_ - 1);
+        build();
+    }
+
+    // a[i] = v
+    $ set(u32 i, T C& v)
+    {
+        i += n_ - 1;
+        tree_[i] = v;
+        while (i != 0)
+        {
+            i = i - 1 >> 1;
+            tree_[i] = func_(tree_[(i << 1) + 1], tree_[(i << 1) + 2]);
+        }
+    }
+
+    // 求[i, j)在func意义下的和
+    $ query(u32 C& i, u32 C& j)C
+    {
+        function<T(u32, u32, u32)> dfs = [&](u32 C& k, u32 C& l, u32 C& r)
+        {
+            if (r <= i or j <= l)
+            {
+                return init_val_;
+            }
+            if (i <= l and r <= j)
+            {
+                return tree_[k];
+            }
+            return func_(
+                dfs((k << 1) + 1, l, l + r >> 1),
+                dfs((k << 1) + 2, l + r >> 1, r));
+        };
+        return dfs(0, 0, n_);
+    }
+};
+
+#pragma endregion
+
+```
