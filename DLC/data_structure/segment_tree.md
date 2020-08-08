@@ -19,17 +19,17 @@ class sgt
         for ($ i = n_ - 1; i != 0;)
         {
             --i;
-            tree_[i] = func_(tree_[(i << 1) + 1], tree_[(i << 1) + 2]);
+            tree_[i] = func_(tree_[i * 2 + 1], tree_[i * 2 + 2]);
         }
     }
 
 public:
-    sgt(u32 C& n, T C& init_val, function<T(T, T)>C& func)
-        : init_val_(init_val), func_(func)
+    sgt(u32 C& n, T C& init_val, function<T(T, T)> func)
+        : init_val_(init_val), func_(move(func))
     {
         while (n_ < n)
         {
-            n_ <<= 1;
+            n_ *= 2;
         }
         tree_.resize(n_ * 2 - 1, init_val_);
     }
@@ -55,8 +55,8 @@ public:
         tree_[i] = v;
         while (i != 0)
         {
-            i = i - 1 >> 1;
-            tree_[i] = func_(tree_[(i << 1) + 1], tree_[(i << 1) + 2]);
+            i = (i - 1) / 2;
+            tree_[i] = func_(tree_[i * 2 + 1], tree_[i * 2 + 2]);
         }
     }
 
@@ -74,8 +74,8 @@ public:
                 return tree_[k];
             }
             return func_(
-                dfs((k << 1) + 1, l, l + r >> 1),
-                dfs((k << 1) + 2, l + r >> 1, r));
+                dfs(k * 2 + 1, l, (l + r) / 2),
+                dfs(k * 2 + 2, (l + r) / 2, r));
         };
         return dfs(0, 0, n_);
     }
