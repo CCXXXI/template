@@ -63,21 +63,24 @@ public:
     // 求[i, j)在func意义下的和
     $ query(u32 C& i, u32 C& j)C
     {
-        function<T(u32, u32, u32)> dfs = [&](u32 C& k, u32 C& l, u32 C& r)
+        T res = init_val_;
+        function<void(u32, u32, u32)> dfs = [&](u32 C& o, u32 C& l, u32 C& r)
         {
             if (r <= i or j <= l)
             {
-                return init_val_;
+                return;
             }
             if (i <= l and r <= j)
             {
-                return tree_[k];
+                res = func_(res, tree_[o]);
+                return;
             }
-            return func_(
-                dfs(k * 2 + 1, l, (l + r) / 2),
-                dfs(k * 2 + 2, (l + r) / 2, r));
+            $ C m = (l + r) / 2;
+            dfs(o * 2 + 1, l, m);
+            dfs(o * 2 + 2, m, r);
         };
-        return dfs(0, 0, n_);
+        dfs(0, 0, n_);
+        return res;
     }
 };
 
