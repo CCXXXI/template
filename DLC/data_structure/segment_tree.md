@@ -151,10 +151,9 @@ class sgt_large
         {
             if (r <= i or j <= l)
             {
-                maintain(o, l, r);
-                return;
+                // pass
             }
-            if (i <= l and r <= j)
+            else if (i <= l and r <= j)
             {
                 if constexpr (Set)
                 {
@@ -179,11 +178,11 @@ class sgt_large
     }
 
 public:
-    explicit sgt_large(u32 C& n): n_(n)
+    explicit sgt_large(u32 C& n) : n_(n)
     {
     }
 
-    explicit sgt_large(v_t C& a): n_(a.size())
+    explicit sgt_large(v_t C& a) : n_(a.size())
     {
         function<void(u32, u32, u32)> dfs = [&](u32 C& o, u32 C& l, u32 C& r)
         {
